@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task 20</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.textArea {
+			width: 150px;
+			height: 100px;
+			outline: none;
+		}
+		.display {
+			display: inline-block;
+			text-align: center;
+			line-height: 20px;
+			height: 30px;
+			padding: 10px 10px 0 10px;
+			margin: 10px;
+			background-color: pink;
+		}
+		.select {
+      display: inline-block;
+      text-align: center;
+      line-height: 20px;
+      height: 30px;
+      padding: 10px 10px 0 10px;
+      margin: 10px;
+			background-color: red;
+      color: #ffffff;
+		}
+	</style>
+</head>
+<body>
+    <textarea class="textArea" id="textArea" placeholder="请输入内容..."></textarea>
+    <button id="insert" onclick="insertFunc()">插入</button>
+    <button id="find" onclick="findFunc()">查询</button>
+    <input type="text" id="textFind" placeholder="请输入要查询内容...">
+    <div id="print"></div>
+    <script type="text/javascript">
+      var text = document.getElementById('textArea');
+      var insert = document.getElementById('insert');
+      var find = document.getElementById('find');
+      var textFind = document.getElementById('textFind');
+      var print = document.getElementById('print');
+      function insertFunc() {
+        var textCon = text.value.split(/[ ,，\n]/g);
+        for(var i = 0 ; i < textCon.length ; i++) {
+          var idvalue = textCon[i].toString();
+          var div = document.createElement('div');
+          div.setAttribute("class","display");
+          div.setAttribute("id",idvalue);
+          div.innerHTML = textCon[i];
+          print.appendChild(div);
+          }
+      }
+  	  function findFunc() {
+        var div = document.getElementsByTagName('div');
+        for(var i = 1 ; i < div.length ; i++) {
+          if(div[i].innerHTML === textFind.value) {
+            var idValue = textFind.value.toString();
+            var disDiv = document.getElementById(idValue);
+            // disDiv.style.color = "red";
+            disDiv.setAttribute("class","select");
+          }
+        }
+        textFind.value = "";
+    	}
+  </script>
+</body>
+</html>

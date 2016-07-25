@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task 21</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#tag {
+			outline: none;
+		}
+		#habit {
+			display: block;
+			margin: 20px 0;
+			width: 100px;
+			height: 50px;
+			outline: none;
+		}
+		.dispTag {
+			display: inline-block;
+			margin: 10px;
+			height: 50px;
+			border-radius: 20px;
+			line-height: 50px;
+			text-align: center;
+			background-color: #A8D8B5;
+			color: #fff;
+			padding: 0 20px;
+		}
+		.dispHabit {
+			display: inline-block;
+			margin: 10px;
+			height: 50px;
+			border-radius: 20px;
+			line-height: 50px;
+			text-align: center;
+			background-color: #FCC987;
+			color: #fff;
+			padding: 0 20px;
+		}
+	</style>
+</head>
+<body>
+	Tag:<input type="text" id="tag" onkeydown='allowAdd()'>
+	<div id="displayTag"></div>
+	<textarea id="habit"></textarea>
+	<button id="sureHabit" onclick="sureHabitFunc()">确定兴趣爱好</button>
+	<div id="displayHabit"></div>
+	<script type="text/javascript">
+		var tag = document.getElementById('tag');
+		var displayTag = document.getElementById('displayTag');
+		var habit = document.getElementById('habit');
+		var sureHabit = document.getElementById('sureHabit');
+		var displayHabit = document.getElementById('displayHabit');
+
+		function sureHabitFunc() {
+			var habitArr = habit.value.split(/[\n,，、		  /]/g);
+			var length = habitArr.length;
+			for(var i= 0 ; i < length ; i++) {
+				var div = document.createElement('div');
+				div.setAttribute("class","dispHabit");
+			// 	var str = habitArr[i];
+			// 	var dispStr= (function trim(str){ //删除左右两端的空格
+			// 		return str.replace(/(^\s*)|(\s*$)/g,"");
+			// 　　})(str);
+				div.innerHTML = habitArr[i];
+				displayHabit.appendChild(div);
+			}
+
+		}
+
+
+		function allowAdd() {
+			if(event.keyCode==13 || event.keyCode==44 || event.keyCode==32)
+				{
+					addTag();
+				}
+		}
+		function addTag () {
+			var displayTags = document.getElementsByName('Tags');
+			var tagsCount = displayTags.length;
+			if (tag.value!="" && tagsCount<10) {
+				append();
+			}  else if(tag.value == "") {
+				alert("未输入tag！");
+			}  else {
+				displayTag.removeChild(displayTag.firstChild);
+				append();
+			}
+			tag.value = "";
+		}
+		function append() {
+			var div = document.createElement('div');
+			div.setAttribute("class","dispTag");
+			div.setAttribute("name","Tags");
+			div.onclick = function() {
+				displayTag.removeChild(div);
+			}
+			div.innerHTML = tag.value;
+			var divvalue = div.innerHTML;
+			div.onmouseover = function() {
+				div.innerHTML = "删除" + divvalue + " ?";
+				div.style.color = "red";
+			}
+			div.onmouseleave = function() {
+				div.innerHTML = divvalue;
+				div.style.color = "white";
+			}
+			displayTag.appendChild(div);
+		}
+
+	</script>
+</body>
+</html>

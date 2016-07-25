@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<title>Task 19</title>
+  	<meta charset="utf-8">
+  	<style type="text/css">
+  		.display {
+  			width: 15px;
+  			display: inline-block;
+  			background-color: #66D9EF;
+  			margin-right: 3px;
+  			font-size: 10px;
+  			color: #ffffff;
+  			text-align: center;
+  		}
+  		#print {
+  			display: flex;
+  			align-items: flex-end;
+  			height: 200px;
+  			margin-top: 10px;
+  		}
+  		fieldset{
+  			border-radius: 10px;
+  			border-color: #
+  		}
+  	</style>
+</head>
+<body>
+    <fieldset>
+      	<legend>选择输入：</legend>
+        <input type="text" id="inputData" placeholder="请输入数字（10~100）">
+      	<button id="inLeft" onclick="inLeftFunc()">左侧入</button>
+      	<button id="inRight" onclick="inRightFunc()">右侧入</button>
+      	<button id="outLeft" onclick="outLeftFunc()">左侧出</button>
+      	<button id="outRight" onclick="outRightFunc()">右侧出</button>
+      	<button id="dataRan" onclick="setRanDiv()">随机产生</button>
+        <button id="sort" onclick="sortFunc()">排序</button>
+        <button id="clear" onclick="clearFunc()">清空输入</button>
+    </fieldset>
+    <div id="print"></div>
+    <script type="text/javascript">
+        var body = document.getElementById('body');
+      	var inputData = document.getElementById('inputData');
+      	var inLeft = document.getElementById('inLeft');
+      	var inRight = document.getElementById('inRight');
+      	var outLeft = document.getElementById('outLeft');
+      	var outRight = document.getElementById('outRight');
+      	var print = document.getElementById('print');
+
+        //创建条形盒子
+      	function inFunc () {
+        		if (inputData.value!="" && inputData.value>9 && inputData.value<99) {
+      	  	    var div = document.createElement('div');
+          			div.setAttribute("class","display");
+          			div.setAttribute("name","adddiv");
+          			div.innerHTML = inputData.value;
+          			var number = parseInt(div.innerHTML);
+          			div.style.height = number*2 + "px";
+          			div.onclick = function () {
+          				print.removeChild(div);
+          			};
+      	  	}else {
+      	  	    alert("输入有误！");
+      	  	}
+      	  	return div;
+      	}
+        //左侧入
+      	function inLeftFunc() {
+      	  	var div = inFunc();
+      	  	print.insertBefore(div,print.firstChild);
+      	  	inputData.value = "";
+      	}
+        //右侧入
+      	function inRightFunc() {
+        		var div = inFunc();
+      	  	print.appendChild(div);
+      	  	inputData.value = "";
+      	}
+        //左侧出
+      	function outLeftFunc() {
+      	    print.removeChild(print.firstChild);
+      	}
+        //右侧出
+      	function outRightFunc() {
+      	    print.removeChild(print.lastChild);
+      	}
+        //产生随机数min~max
+      	function dataRanFunc(min, max) {
+            var r = Math.random() * (max - min);
+            var re = Math.round(r + min);
+            re = Math.max(Math.min(re, max), min);
+            return re;
+        }
+        //设置随机产生20个数
+      	function setRanDiv( ) {
+        		for(var i = 0 ; i < 20 ; i++) {
+        	  		var num = dataRanFunc(11,99);
+        	  		var div = document.createElement('div');
+                div.setAttribute("class","display");
+          			div.setAttribute("name","adddiv");
+          			div.innerHTML = num;
+          			var number = parseInt(div.innerHTML);
+          			div.style.height = number*2 + "px";
+                if (num > 10 && num <= 20) {
+                  div.style.backgroundColor = "#98FB98";
+                }  else if (num > 20 && num <= 30) {
+                  div.style.backgroundColor = "#48D1CC";
+                }  else if (num > 30 && num <= 40) {
+                  div.style.backgroundColor = "#FFA07A";
+                }  else if (num > 40 && num <= 50) {
+                  div.style.backgroundColor = "#00FFFF";
+                }  else if (num > 50 && num <= 60) {
+                  div.style.backgroundColor = "#66D9EF";
+                }  else if (num > 60 && num <= 70) {
+                  div.style.backgroundColor = "#FFB6C1";
+                }  else if (num > 70 && num <= 80) {
+                  div.style.backgroundColor = "#DDA0DD";
+                }  else if (num > 80 && num <= 90) {
+                  div.style.backgroundColor = "#87CEEB";
+                }  else if (num > 90 && num < 100) {
+                  div.style.backgroundColor = "#00FA9A";
+                }
+                print.insertBefore(div,print.firstChild);
+                div.onclick = (function(div){
+                    return function(){
+                      print.removeChild(div);
+                    };
+                })(div);
+        		}
+    	  }
+        //按数值排序
+      	function sortFunc() {
+            var div = document.getElementsByName('adddiv');
+            var i = 0,j = 1;
+            var len = div.length;
+            var timer = null;
+            timer = setInterval(run,10);
+            function run () {
+                if(i < len){
+                    if(j < len){
+                        if(div[i].innerHTML > div[j].innerHTML){
+                            var t=div[i].innerHTML;
+                            var k=div[i].style.backgroundColor;
+                            var h=div[i].style.height;
+                            div[i].innerHTML=div[j].innerHTML;
+                            div[i].style.backgroundColor=div[j].style.backgroundColor;
+                            div[i].style.height=div[j].style.height;
+                            div[j].innerHTML=t;
+                            div[j].style.backgroundColor=k;
+                            div[j].style.height=h;      
+                         }
+                         j++;
+                    }else {
+                        i++;
+                        j=i+1;
+                    }
+                }
+                else{
+                    clearInterval(timer);
+                }
+            }
+      	}
+        //清空
+      	function clearFunc() {
+      		var div = document.getElementsByName('adddiv');
+          var length = div.length;
+      		for(var i = 0 ; i < length ; i++) {
+    	  		print.removeChild(div[0]);
+    	  	}
+      	}
+    </script>
+</body>
+</html>

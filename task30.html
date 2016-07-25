@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task 30</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html,body,form,section,strong,input,span {
+			margin: 0;
+			padding: 0;
+		}
+		form {
+			width: 60%;
+			margin: 0 auto;
+		}
+		section {
+			margin-top: 20px;
+		}
+		section :nth-child(1) {
+			display: inline-block;
+			width: 20%;
+			font-size: 24px;
+			text-align: right;
+		}
+		section :nth-child(2) {
+			width: 40%;
+			height: 30px;
+			outline: none;
+		}
+		.remind {
+			width: 50%;
+			padding: 10px 0 0 23%;
+			display: block;
+			outline: none;
+			color: #98FB98;
+		}
+		.btn {
+			display: block;
+			margin: 20px 0 20px 40%;
+		}
+		span {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<form>
+		<section id="uname">
+			<strong>名称</strong>
+			<input type="text" id="u-id" onfocus="nameRemind()" onblur="nameTest()" autofocus="autofocus">
+			<span></span>
+		</section>
+		<section id="upassword">
+			<strong>密码</strong>
+			<input type="password" id="u-pw" onfocus="pwRemind()" onblur="pwTest()">
+			<span></span>
+		</section>
+		<section id="uspassword">
+			<strong>确认密码</strong>
+			<input type="password" id="u-spw" onfocus="spwRemind()" onblur="spwTest()">
+			<span></span>
+		</section>
+		<section id="uemail">
+			<strong>邮箱</strong>
+			<input type="text" id="u-email" onfocus="emailRemind()" onblur="emailTest()">
+			<span></span>
+		</section>
+		<section id="utelephone">
+			<strong>手机</strong>
+			<input type="text" id="u-phone" onfocus="phoneRemind()" onblur="phoneTest()">
+			<span></span>
+		</section>
+		<input type="submit" class="btn" onclick="check()"></input>
+	</form>
+	<script type="text/javascript">
+		// var myForm = document.forms[0];
+		var uname = document.getElementById('uname');
+		var upassword = document.getElementById('upassword');
+		var uspassword = document.getElementById('uspassword');
+		var uemail = document.getElementById('uemail');
+		var utelephone = document.getElementById('utelephone');
+
+		var uId = document.getElementById('u-id');
+		var uPw = document.getElementById('u-pw');
+		var uSpw = document.getElementById('u-spw');
+		var uEmail = document.getElementById('u-email');
+		var uPhone = document.getElementById('u-phone');
+		//名称提示
+		function nameRemind () {
+			var remindText = document.getElementsByTagName('span')[0];
+			remindText.setAttribute("class","remind");
+			remindText.innerHTML = "必填,长度为4~16个字符";
+			uname.appendChild(remindText);
+		}
+		//密码提示
+		function pwRemind(){
+			var remindText = document.getElementsByTagName('span')[1];
+			remindText.setAttribute("class","remind");
+			remindText.innerHTML = "必填,长度为4~16个字符";
+			upassword.appendChild(remindText);
+		};
+		//确认密码提示
+		function spwRemind(){
+			var remindText = document.getElementsByTagName('span')[2];
+			remindText.setAttribute("class","remind");
+			remindText.innerHTML = "必填,与密码一致";
+			uspassword.appendChild(remindText);
+		};
+		//邮箱提示
+		function emailRemind(){
+			var remindText = document.getElementsByTagName('span')[3];
+			remindText.setAttribute("class","remind");
+			remindText.innerHTML = "必填,与邮箱格式一致";
+			uemail.appendChild(remindText);
+		};
+		//电话格式提示
+		function phoneRemind(){
+			var remindText = document.getElementsByTagName('span')[4];
+			remindText.setAttribute("class","remind");
+			remindText.innerHTML = "必填,11位电话号码";
+			utelephone.appendChild(remindText);
+		};
+		//名称格式验证
+		function nameTest(){
+			var charLength = getLength(uId);
+			var errorRemind = document.getElementsByTagName('span')[0];
+			if (charLength >=4 && charLength <= 16) {
+				errorRemind.innerHTML = "格式正确";
+				return true;
+			}  else if(charLength < 4) {
+				errorRemind.innerHTML = "字符数小于4！";
+				errorRemind.style.color = "red";
+				return false;
+			}  else {
+				errorRemind.innerHTML = "字符数大于16！";
+				errorRemind.style.color = "red";
+				return false;
+			}
+		}
+		//密码格式验证
+		function pwTest() {
+			var charLength = getLength(uPw);
+			var errorRemind = document.getElementsByTagName('span')[1];
+			if (charLength >=6 && charLength <= 16) {
+				errorRemind.innerHTML = "格式正确";
+				return true;
+			}  else if(charLength == 0) {
+				errorRemind.innerHTML = "未输入密码！";
+				errorRemind.style.color = "red";
+				return false;
+			}  else if(charLength < 6) {
+				errorRemind.innerHTML = "密码少于6位！";
+				errorRemind.style.color = "red";
+				return false;
+			}  else {
+				errorRemind.innerHTML = "密码大于16位！";
+				errorRemind.style.color = "red";
+				return false;
+			}
+		}
+		//确认密码验证
+		function spwTest() {
+			var charLength = getLength(uSpw);
+			var errorRemind = document.getElementsByTagName('span')[2];
+			if (uSpw.value == uPw.value && charLength!=0) {
+				errorRemind.innerHTML = "与密码一致！";
+				return true;
+			}else if (uSpw.value != uPw.value) {
+				errorRemind.innerHTML = "两次输入密码不一致！";
+				errorRemind.style.color = "red";
+				return false;
+			}else {
+				errorRemind.innerHTML = "未输入！";
+				errorRemind.style.color = "red";
+				return false;
+			}
+		}
+		//邮箱验证
+		function emailTest() {
+			var errorRemind = document.getElementsByTagName('span')[3];
+			var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+				if(!pattern.test(uEmail.value))
+				{
+			  		errorRemind.innerHTML = "邮箱格式错误！";
+					errorRemind.style.color = "red";
+					return false;
+			    }else {
+			    	errorRemind.innerHTML = "邮箱格式正确！";
+					return true;
+			    }
+		}
+		//手机格式验证
+		function phoneTest() {
+			var errorRemind = document.getElementsByTagName('span')[4];
+			var pattern = /^1[3,5,7,8]\d{9}$/;
+			if (pattern.test(uPhone.value)) {
+				errorRemind.innerHTML = "手机格式正确！";
+				return true;
+			}else {
+				errorRemind.innerHTML = "手机格式错误！";
+				errorRemind.style.color = "red";
+				return false;
+			}
+		}
+		//获取字符串长度
+		function getLength(test) {
+			var length = 0;
+			var testText = test.value;
+			for(var i = 0 ; i < testText.length ; i++) {
+				charCode = testText.charCodeAt(i);
+				if (charCode >=0 &&charCode <= 128) {
+					length += 1;
+				}  else {
+					length += 2;
+				}
+			}
+			return length;
+		}
+		//验证后提交
+		function check() {
+			var n = nameTest();
+			var p = pwTest();
+			var sp = spwTest();
+			var e = emailTest();
+			var p = phoneTest();
+			if(n&&p&&sp&&e&&p) {
+				alert('提交成功！');
+			} else {
+				alert('输入有误！');
+			}
+		}
+
+
+	</script>
+</body>
+
+</html>

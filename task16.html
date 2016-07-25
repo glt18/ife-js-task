@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task16</title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+    城市名称：<input type="text" id="cityName"><br>
+    空气质量指数：<input type="text" id="airQuality"><br>
+    <input type="button" id="appendBtn" value="确认添加" onclick="appendInfo()">
+    <table id="cityAirQua"></table>
+    <script type="text/javascript">
+        var cityName = document.getElementById("cityName");
+        var airQuality = document.getElementById("airQuality");
+        var appendBtn = document.getElementById("appendBtn");
+        var table = document.getElementById("cityAirQua");
+
+        var flag = 0;
+
+        //设置表头及第一行
+        function setTableTh() {
+            var cth = document.createElement("tr");
+            var th = table.appendChild(cth);
+            if (cityName.value!= "" && airQuality.value!="") {
+                th.innerHTML = ("<tr>"+"<td>"+"城市"+"</td>"+"<td>"+"空气质量"+"</td>"+"<td>"+"操作"+"</td>");
+                appendCityInfo();
+            }
+        }
+        //添加城市及空气质量信息
+        function appendCityInfo() {
+            var ctr = document.createElement("tr");
+            if (cityName.value!= "" && airQuality.value!="") {
+                var ctr = document.createElement("tr");
+                var ctdOne = document.createElement('td');
+                ctdOne.innerHTML = cityName.value;
+                ctr.appendChild(ctdOne);
+                var ctdTwo = document.createElement('td');
+                ctdTwo.innerHTML = airQuality.value;
+                ctr.appendChild(ctdTwo);
+                var ctdThree = document.createElement('button');
+                ctdThree.innerHTML = "删除";
+                ctdThree.onclick = function(){
+                    table.removeChild(ctdThree.parentNode);
+                };
+                ctr.appendChild(ctdThree);
+                table.appendChild(ctr);
+            }
+        }
+        function appendInfo() {
+            if(flag == 0){
+                setTableTh();
+                flag = 1;
+            }  else {
+                appendCityInfo();
+            }
+            cityName.value = "";
+            airQuality.value = "";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task 31</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#container_1 {
+			display: none;
+		}
+		#container_2 {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<input type="radio" name="identify" onfocus="student()">在校生
+	<input type="radio" name="identify" onfocus="nonStudent()" onblur="non_hidden()">非在校生
+	<div id="container_1">
+		<span>学校</span>
+		<select onchange="city(this.value);">
+			<option value="1">北京</option>
+			<option value="2">上海</option>
+			<option value="3">西安</option>
+		</select>
+		<select>
+			<option>北京大学</option>
+			<option>清华大学</option>
+			<option>中国人民大学</option>
+		</select>
+	</div>
+	<div id="container_2">
+		<span>就业单位</span>
+		<input type="text">
+	</div>
+	<script type="text/javascript">
+		//在校生时显示
+		function student() {
+			var container_1 = document.getElementById('container_1');      //显示学校的容器
+			container_1.style.display = "block";
+		}
+		//在校生的地区选择
+		function city(val) {
+			var container_1 = document.getElementById('container_1');      //显示学校的容器
+			var city = document.getElementsByTagName('option');        //城市
+			var college = document.getElementsByTagName('option');     //大学名称
+			if (val == 2) {
+				college[3].innerHTML = "复旦大学";
+				college[4].innerHTML = "上海交通大学";
+				college[5].innerHTML = "上海财经大学";
+			}
+			if (val == 3) {
+				college[3].innerHTML = "西安交通大学";
+				college[4].innerHTML = "西北工业大学";
+				college[5].innerHTML = "西安邮电大学";
+			}
+		}
+		//选中非在校生时显示
+		function nonStudent() {
+			studet_hidden();
+			var container_2 = document.getElementById('container_2');
+			container_2.style.display = "block";
+		}
+		function studet_hidden() {
+			var container_1 = document.getElementById('container_1');
+			container_1.style.display = "none";
+		}
+		function non_hidden() {
+			var container_2 = document.getElementById('container_2');
+			container_2.style.display = "none";
+		}
+	</script>
+</body>
+</html>

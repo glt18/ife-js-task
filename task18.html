@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task 18</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.display {
+			display: inline-block;
+			height: 40px;
+			background-color: red;
+			text-align: center;
+			font-size: 30px;
+			color: #ffffff;
+			margin-right: 10px;
+			margin-top: 5px;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body id="body">
+	<input type="text" id="inputData">
+	<button id="inLeft" onclick="inLeftFunc()">左侧入</button>
+	<button id="inRight" onclick="inRightFunc()">右侧入</button>&nbsp;
+	<button id="outLeft" onclick="outLeftFunc()">左侧出</button>
+	<button id="outRight" onclick="outRightFunc()">右侧出</button>
+	<div id="display"></div>
+	<script type="text/javascript">
+		var body = document.getElementById('body');
+		var inputData = document.getElementById('inputData');
+		var inLeft = document.getElementById('inLeft');
+		var inRight = document.getElementById('inRight');
+		var outLeft = document.getElementById('outLeft');
+		var outRight = document.getElementById('outRight');
+		var display = document.getElementById('display');
+		function inLeftFunc() {
+			if (inputData!="") {
+				var div = document.createElement('div');
+				div.setAttribute("class","display");
+				div.innerHTML = inputData.value;
+				display.insertBefore(div,display.firstChild);
+				inputData.value = "";
+			}
+		}
+		function inRightFunc() {
+			if (inputData!="") {
+				var div = document.createElement('div');
+				div.setAttribute("class","display");
+				div.innerHTML = inputData.value;
+				display.appendChild(div);
+				inputData.value = "";
+			}
+		}
+		function outLeftFunc() {
+			display.removeChild(display.firstChild);
+		}
+		function outRightFunc() {
+			display.removeChild(display.lastChild);
+		}
+	</script>
+</body>
+</html>

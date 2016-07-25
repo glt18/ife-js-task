@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 15</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <ul id="ul">
+        <li>北京空气质量：<b>90</b></li>
+        <li>上海空气质量：<b>70</b></li>
+        <li>天津空气质量：<b>80</b></li>
+        <li>广州空气质量：<b>50</b></li>
+        <li>深圳空气质量：<b>40</b></li>
+        <li>福州空气质量：<b>32</b></li>
+        <li>成都空气质量：<b>90</b></li>
+    </ul>
+    <ul id="sortUl"></ul>
+    <input type="button" id="btn" value="排序">
+    <script type="text/javascript">
+        function getData() {
+            var ul = document.getElementById("ul");
+            var data = [];
+            for(var i = 0 ; i < ul.childElementCount ; i++ ) {
+                var li = ul.children[i];
+                var cityName = li.innerHTML.split("空气质量：")[0];
+                var num = Number(li.children[0].innerHTML);
+                data.push([cityName,num]);
+            }
+            return data;
+        }
+        function sortData() {
+            var data = getData();
+            for(var i = 0 ; i < data.length - 1 ; i++ ) {
+                for(var j = 0 ; j < data.length - i - 1; j++) {
+                    var t;
+                    if (data[j][1] > data[j+1][1]) {
+                        t = data[j];
+                        data[j] = data[j+1];
+                        data[j+1] = t;
+                    }
+                }
+            }
+            return data;
+        }
+        function printSortData() {
+            var data = sortData();
+            var sortUl = document.getElementById("sortUl");
+            for(var i = 0 ; i < data.length ; i++) {
+                var j = i + 1;
+                var createLi = document.createElement("li");
+                var sortLi = sortUl.appendChild(createLi);
+                sortLi.innerHTML = ("第" + j + "名" + data[i][0] + "空气质量：" + "<b>" + data[i][1] + "</b>");
+            }
+        }
+        (function() {
+            var btn = document.getElementById("btn");
+            btn.onclick = function() {
+                printSortData();
+            }
+        })();
+    </script>
+</body>
+</html>
